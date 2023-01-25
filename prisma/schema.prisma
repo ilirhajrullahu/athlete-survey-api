@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Athlete {
+  athlete_id        Int               @id @default(autoincrement())
+  first_name        String
+  last_name         String
+  username          String            @unique
+  athlete_password  String            @unique
+  questions         Question[]
+  answer            Answer?
+  taken_survey      Taken_Survey[]
+  messages_sender   Athlete_Message[] @relation("sender")
+  messages_receiver Athlete_Message[] @relation("receiver")
+}
+
+model Survey {
+  survey_id    Int            @id @default(autoincrement())
+  taken_survey Taken_Survey[]
+  questions    Question[]
+}
+
+model Question {
+  question_id   Int     @id @default(autoincrement())
+  question_text String
+  survey        Survey  @relation(fields: [survey_fk], references: [survey_id])
+  survey_fk     Int
+  athlete       Athlete @relation(fields: [athlete_fk], references: [athlete_id])
+  athlete_fk    Int
+  answer        Answer?
+}
+
+model Answer {
+  answer_id     Int      @id @default(autoincrement())
+  answer_number Int
+  question      Question @relation(fields: [question_fk], references: [question_id])
+  question_fk   Int      @unique
+  athlete       Athlete  @relation(fields: [athlete_fk], references: [athlete_id])
+  athlete_fk    Int      @unique
+}
+
+model Taken_Survey {
+  taken_survey_id Int     @id @default(autoincrement())
+  athlete         Athlete @relation(fields: [athlete_fk], references: [athlete_id])
+  athlete_fk      Int
+  survey          Survey  @relation(fields: [survey_fk], references: [survey_id])
+  survey_fk       Int
+}
+
+model Athlete_Message {
+  message_id       Int      @id @default(autoincrement())
+  message_text     String
+  message_date     DateTime @default(now())
+  athlete_one      Athlete  @relation("sender", fields: [message_sender], references: [athlete_id])
+  message_sender   Int
+  athlete_two      Athlete  @relation("receiver", fields: [message_receiver], references: [athlete_id])
+  message_receiver Int
+}
