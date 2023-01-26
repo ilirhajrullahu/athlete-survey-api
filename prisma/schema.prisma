@@ -17,7 +17,7 @@ model Athlete {
   username          String            @unique
   athlete_password  String            @unique
   questions         Question[]
-  answer            Answer?
+  answer            Answer[]
   taken_survey      Taken_Survey[]
   messages_sender   Athlete_Message[] @relation("sender")
   messages_receiver Athlete_Message[] @relation("receiver")
@@ -32,10 +32,10 @@ model Survey {
 model Question {
   question_id   Int     @id @default(autoincrement())
   question_text String
-  survey        Survey  @relation(fields: [survey_fk], references: [survey_id])
-  survey_fk     Int
-  athlete       Athlete @relation(fields: [athlete_fk], references: [athlete_id])
-  athlete_fk    Int
+  survey        Survey?  @relation(fields: [survey_fk], references: [survey_id])
+  survey_fk     Int?
+  athlete       Athlete? @relation(fields: [athlete_fk], references: [athlete_id])
+  athlete_fk    Int?
   answer        Answer?
 }
 
@@ -45,7 +45,7 @@ model Answer {
   question      Question @relation(fields: [question_fk], references: [question_id])
   question_fk   Int      @unique
   athlete       Athlete  @relation(fields: [athlete_fk], references: [athlete_id])
-  athlete_fk    Int      @unique
+  athlete_fk    Int      
 }
 
 model Taken_Survey {

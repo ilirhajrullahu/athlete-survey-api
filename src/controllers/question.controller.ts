@@ -18,7 +18,7 @@ export const questionController = {
     },
     async createQuestion(req: Request, res: Response) {
         const questionData = req.body;
-        console.log(questionData)
+
         try {
             const question = await prisma.question.create({
                 data: {
@@ -51,7 +51,6 @@ export const questionController = {
     },
     async getUnansweredQuestionsOfAthlete(req: Request, res: Response) {
         const athlete_id = parseInt(req.params.id)
-        console.log(athlete_id)
         let returnArr;
         try {
             const returnA = await prisma.question.findMany({
@@ -88,4 +87,5 @@ export const questionController = {
             res.status(400).send(error);
         }
     }
+
 }
