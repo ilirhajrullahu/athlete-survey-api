@@ -6,6 +6,6 @@ const routes = Router();
 routes.get("/", athleteController.getAllAthletes)
 routes.get("/:id", athleteController.getAthleteById)
 routes.post("/", athleteController.createAthlete)
-routes.get("/logIn", athleteController.logInAthlete)
+routes.post("/logIn", athleteController.logInAthlete)
 
 export default routes;
