@@ -32,7 +32,7 @@ export const athleteController = {
                     athlete_password: athleteData.password
                 }
             })
-            return res.json({ athlete: athlete })
+            return res.json(athlete)
         } catch (error) {
             res.status(400).send(error);
         }
