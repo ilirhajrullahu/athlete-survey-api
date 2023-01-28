@@ -36,14 +36,14 @@ model Question {
   survey_fk     Int?
   athlete       Athlete? @relation(fields: [athlete_fk], references: [athlete_id])
   athlete_fk    Int?
-  answer        Answer?
+  answer        Answer[]
 }
 
 model Answer {
   answer_id     Int      @id @default(autoincrement())
   answer_number Int
   question      Question @relation(fields: [question_fk], references: [question_id])
-  question_fk   Int      @unique
+  question_fk   Int       
   athlete       Athlete  @relation(fields: [athlete_fk], references: [athlete_id])
   athlete_fk    Int      
 }

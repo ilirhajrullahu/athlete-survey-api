@@ -27,6 +27,23 @@ export const questionController = {
                     survey_fk: questionData.survey_fk
                 }
             })
+
+            const athletes = await prisma.athlete.findMany({
+                select:{
+                    athlete_id:true
+                }
+            });
+
+            for(let i = 0; i < athletes.length; i++) {
+                let obj = athletes[i];
+                let answer = await prisma.answer.create({
+                    data:{
+                        answer_number:0,
+                        athlete_fk: obj.athlete_id,
+                        question_fk:question.question_id
+                    }
+                })
+            }
             return res.json({ question: question });
         }
         catch (error) {
@@ -56,12 +73,11 @@ export const questionController = {
             const returnA = await prisma.question.findMany({
                 where: {
                     answer: {
-                        athlete_fk: athlete_id,
-                        answer_number: 0
+                        some:{
+                            athlete_fk: athlete_id,
+                            answer_number: 0
+                        }
                     }
-                },
-                include: {
-                    answer: true
                 }
             })
             returnArr = returnA
@@ -69,14 +85,13 @@ export const questionController = {
                 const returnB = await prisma.question.findMany({
                     where: {
                         answer: {
-                            athlete_fk: athlete_id,
-                            NOT: {
-                                answer_number: 0
+                            some:{
+                                athlete_fk: athlete_id,
+                                NOT: {
+                                    answer_number: 0
+                                }
                             }
                         }
-                    },
-                    include: {
-                        answer: true
                     }
                 })
                 returnArr = returnB
