@@ -36,13 +36,15 @@ export const questionController = {
 
             for(let i = 0; i < athletes.length; i++) {
                 let obj = athletes[i];
-                let answer = await prisma.answer.create({
-                    data:{
-                        answer_number:0,
-                        athlete_fk: obj.athlete_id,
-                        question_fk:question.question_id
-                    }
-                })
+                if (obj.athlete_id != 1){
+                    let answer = await prisma.answer.create({
+                        data:{
+                            answer_number:0,
+                            athlete_fk: obj.athlete_id,
+                            question_fk:question.question_id
+                        }
+                    })
+                }
             }
             return res.json({ question: question });
         }
