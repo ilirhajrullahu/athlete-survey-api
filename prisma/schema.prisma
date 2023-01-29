@@ -27,6 +27,7 @@ model Survey {
   survey_id    Int            @id @default(autoincrement())
   taken_survey Taken_Survey[]
   questions    Question[]
+  message Athlete_Message?
 }
 
 model Question {
@@ -60,6 +61,8 @@ model Athlete_Message {
   message_id       Int      @id @default(autoincrement())
   message_text     String
   message_date     DateTime @default(now())
+  survey        Survey?  @relation(fields: [survey_fk], references: [survey_id]) 
+  survey_fk     Int? @unique
   athlete_one      Athlete  @relation("sender", fields: [message_sender], references: [athlete_id])
   message_sender   Int
   athlete_two      Athlete  @relation("receiver", fields: [message_receiver], references: [athlete_id])

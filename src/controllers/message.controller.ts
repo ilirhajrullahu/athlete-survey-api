@@ -18,7 +18,8 @@ export const messageController = {
                 data: {
                     message_text: messageData.message_text,
                     message_sender: messageData.sender,
-                    message_receiver: messageData.receiver
+                    message_receiver: messageData.receiver,
+                    survey_fk:messageData.survey_fk
                 }
             })
             return res.json({ message: message });
