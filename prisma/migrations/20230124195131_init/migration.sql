@@ -37,15 +37,6 @@ CREATE TABLE "Answer" (
 );
 
 -- CreateTable
-CREATE TABLE "Taken_Survey" (
-    "taken_survey_id" SERIAL NOT NULL,
-    "athlete_fk" INTEGER NOT NULL,
-    "survey_fk" INTEGER NOT NULL,
-
-    CONSTRAINT "Taken_Survey_pkey" PRIMARY KEY ("taken_survey_id")
-);
-
--- CreateTable
 CREATE TABLE "Athlete_Message" (
     "message_id" SERIAL NOT NULL,
     "message_text" TEXT NOT NULL,
@@ -70,12 +61,6 @@ ALTER TABLE "Answer" ADD CONSTRAINT "Answer_question_fk_fkey" FOREIGN KEY ("ques
 
 -- AddForeignKey
 ALTER TABLE "Answer" ADD CONSTRAINT "Answer_athlete_fk_fkey" FOREIGN KEY ("athlete_fk") REFERENCES "Athlete"("athlete_id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Taken_Survey" ADD CONSTRAINT "Taken_Survey_athlete_fk_fkey" FOREIGN KEY ("athlete_fk") REFERENCES "Athlete"("athlete_id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Taken_Survey" ADD CONSTRAINT "Taken_Survey_survey_fk_fkey" FOREIGN KEY ("survey_fk") REFERENCES "Survey"("survey_id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Athlete_Message" ADD CONSTRAINT "Athlete_Message_message_sender_fkey" FOREIGN KEY ("message_sender") REFERENCES "Athlete"("athlete_id") ON DELETE RESTRICT ON UPDATE CASCADE;
