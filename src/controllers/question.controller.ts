@@ -80,6 +80,9 @@ export const questionController = {
                             answer_number: 0
                         }
                     }
+                },
+                include:{
+                    answer:true
                 }
             })
             returnArr = returnA
@@ -94,6 +97,9 @@ export const questionController = {
                                 }
                             }
                         }
+                    },
+                    include:{
+                        answer:true
                     }
                 })
                 returnArr = returnB
