@@ -44,7 +44,11 @@ export const surveyController = {
                 survey_id: paramId
             },
             include: {
-                questions: true
+                questions:{
+                    include:{
+                        answer:true
+                    }
+                }
             }
         })
         return res.json({ uniqueSurvey: uniqueSurvey });
