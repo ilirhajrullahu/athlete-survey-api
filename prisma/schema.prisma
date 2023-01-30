@@ -18,14 +18,12 @@ model Athlete {
   athlete_password  String            @unique
   questions         Question[]
   answer            Answer[]
-  taken_survey      Taken_Survey[]
   messages_sender   Athlete_Message[] @relation("sender")
   messages_receiver Athlete_Message[] @relation("receiver")
 }
 
 model Survey {
   survey_id    Int            @id @default(autoincrement())
-  taken_survey Taken_Survey[]
   questions    Question[]
   message Athlete_Message?
 }
@@ -47,14 +45,6 @@ model Answer {
   question_fk   Int       
   athlete       Athlete  @relation(fields: [athlete_fk], references: [athlete_id])
   athlete_fk    Int      
-}
-
-model Taken_Survey {
-  taken_survey_id Int     @id @default(autoincrement())
-  athlete         Athlete @relation(fields: [athlete_fk], references: [athlete_id])
-  athlete_fk      Int
-  survey          Survey  @relation(fields: [survey_fk], references: [survey_id])
-  survey_fk       Int
 }
 
 model Athlete_Message {
