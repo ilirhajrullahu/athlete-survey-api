@@ -43,7 +43,6 @@ export const answerController = {
     },
     async answerAnUnansweredQuestion(req: Request, res: Response) {
         const answerData = req.body;
-        console.log(answerData)
         try {
             const answer = await prisma.answer.update({
                 where: {
